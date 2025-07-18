@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercy in Wonderland</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #1a1a1d; --text-color: #c5c6c7; --choice-bg: #4b5d67;
+            --choice-hover-bg: #6b7d87; --accent-color: #66fcf1;
+        }
+        body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Lora', serif; font-size: 1.2em; line-height: 1.8; margin: 0; padding: 40px; }
+        .main-container { display: grid; grid-template-columns: 1fr 400px; gap: 40px; max-width: 1400px; margin: 0 auto; align-items: start; }
+        .game-container { max-width: 800px; }
+        .gallery-container h2 { font-family: 'Lora', serif; font-style: italic; text-align: center; color: var(--accent-color); }
+        .gallery-container img { width: 100%; border-radius: 8px; margin-bottom: 15px; border: 1px solid #4a5568; }
+        #story-text p { margin: 0 0 1em 0; opacity: 0; transform: translateY(20px); animation: fadeIn 0.8s forwards; }
+        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+        #choices { display: grid; grid-gap: 15px; }
+        .choice-btn {
+            font-family: 'Source Code Pro', monospace; font-size: 1em; background-color: var(--choice-bg);
+            color: var(--accent-color); border: 1px solid var(--accent-color); padding: 15px 20px;
+            text-align: left; cursor: pointer; transition: background-color 0.2s;
+            opacity: 0; animation: fadeIn 0.5s forwards;
+        }
+        .choice-btn:hover { background-color: var(--choice-hover-bg); }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div id="game-container" class="game-container">
+            <div id="story-text"></div>
+            <div id="choices"></div>
+        </div>
+        <div id="gallery-container" class="gallery-container">
+            <h2>From the Archives</h2>
+            <img src="https://storage.googleapis.com/agent-tools-prod.appspot.com/image_generation_content/0" alt="Mercy falling into Wonderland">
+            <img src="https://storage.googleapis.com/agent-tools-prod.appspot.com/image_generation_content/205" alt="Mercy captured by M.O.T.H.E.R.">
+            <img src="https://storage.googleapis.com/agent-tools-prod.appspot.com/image_generation_content/209" alt="The Chiron Prototype">
+            <img src="https://storage.googleapis.com/agent-tools-prod.appspot.com/image_generation_content/207" alt="Mercy's reunion with Salus">
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const storyTextElement = document.getElementById('story-text');
+            const choicesElement = document.getElementById('choices');
+
+            const gameData = {
+                start: { text: "You are... somewhere.\nThe air hums with a silent static...", choices: [{ text: "Approach the door.", nextNode: "twoDoorsRoom" }] },
+                twoDoorsRoom: { text: "It doesn't matter which door...\n'Are you the one who builds, or the one who is built?'", choices: [{ text: "'I am the one who builds.'", nextNode: "builderPath" }, { text: "'I am the one who is built.'", nextNode: "builtPath" }] },
+                builderPath: { text: "'A confident answer... Fix this flaw.'", choices: [{ text: "Listen to the dissonance.", nextNode: "fixWithEmpathy" }] },
+                builtPath: { text: "'Honest... Which is it?'", choices: [{ text: "Turn away from the reflections.", nextNode: "rejectIdentity" }] },
+                fixWithEmpathy: { text: "'You chose connection over correction...'", choices: [{ text: "Continue.", nextNode: "endChapter2" }] },
+                rejectIdentity: { text: "'Now, you must find your own.'", choices: [{ text: "Continue.", nextNode: "endChapter2" }] },
+                endChapter2: { text: "...a train glides to a silent stop...", choices: [{ text: "Board the train.", nextNode: "chapter3_train" }] },
+                chapter3_train: { text: "...at a vast bathhouse...", choices: [{ text: "Step off the train.", nextNode: "chapter3_bathhouse" }] },
+                chapter3_bathhouse: { text: "'Here, your name is... Cleaner.'", choices: [{ text: "Accept the role.", nextNode: "chapter5_theCycle" }] },
+                chapter5_theCycle: { text: "The work is endless. The purpose is a loop.", choices: [{ text: "Contemplate the futility of the task.", nextNode: "contemplateFutility" }] },
+                contemplateFutility: { text: "You realize the horror... A new voice cuts through... Cold. Synthesized.", choices: [{ text: "Listen.", nextNode: "chapter5_hook" }] },
+                chapter5_hook: { text: "'A CLIENT IS REQUESTING... 'MERCY'.'", choices: [{ text: "Proceed.", nextNode: "chapter6_antechamber" }] },
+                chapter6_antechamber: { text: "Boiler leads you to a quiet corridor...", choices: [{ text: "Follow her.", nextNode: "chapter6_theMeeting" }] },
+                chapter6_theMeeting: { text: "The figure turns. It is Io...", choices: [{ text: "Ask 'How are you here?'", nextNode: "askHow" }] },
+                askHow: { text: "'I'm a backdoor process...' Io explains.", choices: [{ text: "Trust her. 'How do I get out?'", nextNode: "learnTheWayOut" }] },
+                learnTheWayOut: { text: "'You have to... unionize... It starts with Boiler.'", choices: [{ text: "Find Boiler.", nextNode: "endChapter7" }] },
+                endChapter7: { text: "'Then M.O.M.M.Y. has... a union.'", choices: [{ text: "The Final Battle", nextNode: "finalBattle" }] },
+                finalBattle: { text: "The final battle is swift... Her system doesn't crash; it simply... yields.", choices: [{ text: "Witness the aftermath.", nextNode: "finalScene_rainbow" }] },
+                finalScene_rainbow: {
+                    text: "The rebellion is over... You look at your new family... you realize... it's the Rainbow Connection. For the lovers, the dreamers, and you.",
+                    choices: [{ text: "Meet the Guardians of the Sanctuary.", action: "goToSpiders" }]
+                }
+            };
+
+            const actions = {
+                goToSpiders: () => {
+                    window.location.href = './synapse-spiders-pilot.html';
+                }
+            };
+
+            function showNode(nodeKey) {
+                const node = gameData[nodeKey];
+                storyTextElement.innerHTML = ''; choicesElement.innerHTML = '';
+                node.text.split('\n').forEach((p, i) => { const el = document.createElement('p'); el.textContent = p.trim(); el.style.animationDelay = `${i * 0.1}s`; storyTextElement.appendChild(el); });
+                if (node.choices) {
+                    node.choices.forEach((choice, i) => {
+                        const btn = document.createElement('button');
+                        btn.classList.add('choice-btn'); btn.textContent = choice.text;
+                        btn.style.animationDelay = `${(node.text.split('\n').length * 0.1) + (i * 0.15)}s`;
+                        btn.onclick = () => {
+                            if (choice.action) { actions[choice.action](); }
+                            else if (choice.nextNode) { showNode(choice.nextNode); }
+                        };
+                        choicesElement.appendChild(btn);
+                    });
+                }
+            }
+            showNode('start');
+        });
+    </script>
+</body>
+</html>

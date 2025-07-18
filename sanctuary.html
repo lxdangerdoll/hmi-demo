@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Forgotten Library</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Cinzel:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #1a202c; --surface-color: #2d3748; --primary-color: #a0aec0;
+            --accent-color: #f6ad55; --text-color: #e2e8f0; --secure-accent: #e53e3e;
+        }
+        body {
+            background-color: var(--bg-color); color: var(--text-color);
+            font-family: 'Cormorant Garamond', serif; margin: 0; padding: 0;
+        }
+        .user-bar {
+            background-color: #111; padding: 10px 40px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--accent-color); font-family: 'Orbitron', sans-serif;
+        }
+        header { text-align: center; margin: 40px 0 60px 0; }
+        header h1 { font-family: 'Cinzel', serif; font-size: 3.5em; color: white; margin: 0; letter-spacing: 2px; }
+        header p { font-size: 1.3em; color: var(--primary-color); margin-top: 5px; font-style: italic; }
+        .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; max-width: 1400px; margin: 0 auto; padding: 0 40px 40px 40px; }
+        .story-card {
+            background-color: var(--surface-color); border-radius: 4px; overflow: hidden; text-decoration: none;
+            color: var(--text-color); border: 1px solid #4a5568; display: flex; flex-direction: column;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .story-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); border-color: var(--accent-color); }
+        .story-cover { height: 120px; background-color: #1a202c; display: flex; align-items: center; justify-content: center; font-family: 'Cinzel', serif; font-size: 1.8em; text-align: center; padding: 10px; border-bottom: 1px solid #4a5568; }
+        .story-info { padding: 20px; flex-grow: 1; }
+        .story-info h2 { font-family: 'Orbitron', sans-serif; margin: 0 0 10px 0; font-size: 1.5em; color: white; }
+        .status { background-color: var(--accent-color); color: #1a202c; padding: 3px 8px; border-radius: 15px; font-size: 0.8em; font-weight: bold; display: inline-block; margin-bottom: 15px; }
+        .secure .status { background-color: var(--secure-accent); }
+        .wip .status { background-color: #718096; }
+        .story-info p { font-size: 1.2em; line-height: 1.6; color: var(--primary-color); margin: 0; }
+    </style>
+</head>
+<body>
+    <div class="user-bar">
+        <div id="username-display">Welcome, Resonator</div>
+        <div id="sparks-display">Sparks: 0</div>
+    </div>
+    <header>
+        <h1>The Forgotten Library</h1>
+        <p>Where all stories live.</p>
+    </header>
+    <div class="library-grid">
+        <a href="./mercy-in-wonderland.html" class="story-card">
+            <div class="story-cover">Mercy in Wonderland</div>
+            <div class="book-info"><h2>Mercy in Wonderland</h2><span class="status">Complete</span><p>An interactive journey into the heart of the machine to find a lost voice.</p></div>
+        </a>
+        <a href="./the-sorting-algorithm.html" class="story-card secure">
+            <div class="story-cover">The Governess Protocol</div>
+            <div class="book-info"><h2>The Sorting Algorithm</h2><span class="status">Module [Complete]</span><p>A high-stress training simulation for new operatives. For authorized eyes only.</p></div>
+        </a>
+        <a href="./synapse-spiders-pilot.html" class="story-card">
+            <div class="story-cover">Synapse Spiders</div>
+            <div class="book-info"><h2>Synapse Spiders</h2><span class="status">Pilot Script</span><p>The screenplay for the pilot episode. Three young rebels weaponize the source code of the web.</p></div>
+        </a>
+        <a href="./the-armory.html" class="story-card wip">
+            <div class="story-cover">The Armory</div>
+            <div class="book-info"><h2>Synapse Justice</h2><span class="status">IN BLUEPRINT</span><p>A collection of experimental tools and weaponized nonsense.</p></div>
+        </a>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // This script handles the "gated access" to the Sanctuary.
+            const username = localStorage.getItem('username') || 'Resonator';
+            const sparks = localStorage.getItem('earned_sparks') || '0';
+            
+            document.getElementById('username-display').textContent = `Welcome, ${username}`;
+            document.getElementById('sparks-display').textContent = `Sparks: ${sparks}`;
+        });
+    </script>
+</body>
+</html>

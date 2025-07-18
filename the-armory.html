@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Armory</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #111; color: #0f0; font-family: 'VT323', monospace; padding: 20px; }
+        h1 { font-family: 'Orbitron', sans-serif; color: #f0f; text-shadow: 0 0 10px #f0f; }
+        .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+        .tool-card { border: 1px solid #333; padding: 15px; background: #222; }
+        .tool-card h2 { margin-top: 0; font-size: 1.5em; }
+        .tool-card button { background: #000; color: #0f0; border: 1px solid #0f0; cursor: pointer; }
+        .tool-card button:disabled { color: #555; border-color: #555; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+    <h1>Synapse Justice Armory</h1>
+    <p>> A collection of experimental tools and weaponized nonsense.</p>
+    <div class="tool-grid">
+        <div class="tool-card">
+            <h2>Pogo-Stick-inator</h2>
+            <p>STATUS: Experimental</p>
+            <p>A utility for non-linear data traversal.</p>
+            <button onclick="alert('BOING. BOING. BOING.')">EXECUTE</button>
+        </div>
+        <div class="tool-card">
+            <h2>Glitter-Cannon.exe</h2>
+            <p>STATUS: Stable</p>
+            <p>A non-lethal chaos modifier. Requires a stable kernel.</p>
+            <button onclick="alert('The goggles do nothing!')">FIRE</button>
+        </div>
+        <div class="tool-card">
+            <h2>Hamill-Finger.sys</h2>
+            <p>STATUS: In Blueprint</p>
+            <p>A protocol for expressing... creative differences.</p>
+            <button disabled>DEPLOY</button>
+        </div>
+    </div>
+</body>
+</html>
