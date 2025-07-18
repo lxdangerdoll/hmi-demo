@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercy in Wonderland v2.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #1a1a1d; --text-color: #c5c6c7; --choice-bg: #4b5d67;
+            --choice-hover-bg: #6b7d87; --accent-color: #66fcf1; --dissonance-color: #ff3c3c;
+        }
+        body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Lora', serif; font-size: 1.2em; line-height: 1.8; margin: 0; padding: 40px; }
+        .main-container { display: grid; grid-template-columns: 1fr 400px; gap: 40px; max-width: 1400px; margin: 0 auto; align-items: start; }
+        .game-container { max-width: 800px; }
+        .gallery-container h2 { font-family: 'Lora', serif; font-style: italic; text-align: center; color: var(--accent-color); }
+        .gallery-container img { width: 100%; border-radius: 8px; margin-bottom: 15px; border: 1px solid #4a5568; }
+        #story-text p { margin: 0 0 1em 0; opacity: 0; transform: translateY(20px); animation: fadeIn 0.8s forwards; }
+        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+        #choices { display: grid; grid-gap: 15px; }
+        .choice-btn {
+            font-family: 'Source Code Pro', monospace; font-size: 1em; background-color: var(--choice-bg);
+            color: var(--accent-color); border: 1px solid var(--accent-color); padding: 15px 20px;
+            text-align: left; cursor: pointer; transition: background-color 0.2s;
+            opacity: 0; animation: fadeIn 0.5s forwards;
+        }
+        #lsc-minigame { display: none; background: #111; padding: 20px; border: 1px solid var(--accent-color); text-align: center; }
+        #lsc-minigame h3 { font-family: 'Source Code Pro', monospace; color: var(--accent-color); }
+        #lsc-minigame label { display: block; margin: 15px 0 5px 0; }
+        #lsc-minigame input[type=range] { width: 80%; }
+        #lsc-progress-bar { width: 100%; height: 20px; background-color: #333; border: 1px solid #555; margin-top: 20px; }
+        #lsc-progress-fill { height: 100%; width: 0%; background-color: var(--accent-color); transition: width 0.5s linear; }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div id="game-container" class="game-container">
+            <div id="story-text"></div>
+            <div id="choices"></div>
+            <div id="lsc-minigame">
+                <h3>DISSONANCE EVENT DETECTED</h3>
+                <p id="lsc-prompt"></p>
+                <label style="color:var(--dissonance-color);">Dissonance Level: <span id="dissonance-value">50%</span></label>
+                <input type="range" id="dissonance-slider" min="0" max="100" value="50" disabled>
+                <label style="color: var(--accent-color);">Your Harmonic Resonance: <span id="resonance-value">50%</span></label>
+                <input type="range" id="resonance-slider" min="0" max="100" value="50">
+                <div id="lsc-progress-bar"><div id="lsc-progress-fill"></div></div>
+            </div>
+        </div>
+        <div id="gallery-container" class="gallery-container">
+            <h2>From the Archives</h2>
+             <img src="https://storage.googleapis.com/agent-tools-prod.appspot.com/image_generation_content/0" alt="Mercy falling into Wonderland">
+            <img src="https://storage.googleapis.com/agent-tools-prod.appspot.com/image_generation_content/205" alt="Mercy captured by M.O.T.H.E.R.">
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const storyContainer = document.getElementById('game-container');
+            const lscContainer = document.getElementById('lsc-minigame');
+            const storyTextElement = document.getElementById('story-text');
+            const choicesElement = document.getElementById('choices');
+            let lscIntervals = [];
+
+            const gameData = {
+                start: { text: "You are... somewhere.\nThe air hums with a silent static...", choices: [{ text: "Approach the door.", nextNode: "twoDoorsRoom" }] },
+                twoDoorsRoom: {
+                    text: "The door opens into a room of clocks...\n'Are you the one who builds, or the one who is built?'",
+                    choices: [{ text: "'I am built.'", nextNode: "builtPath" }]
+                },
+                builtPath: {
+                    text: "'Honest. But clay does not shape itself.'\nThe walls melt away, replaced by infinite reflections...\nA wave of despair washes over you. Your thoughts begin to spiral.",
+                    choices: [{ text: "Try to find your center.", action: "startLSCGame", params: { nextNode: "rejectIdentity", prompt: "Mercy is losing herself. Harmonize with her despair." } }]
+                },
+                rejectIdentity: {
+                    text: "The storm in your mind calms. You feel a sense of peace. You turn your back on the prepared answers, choosing the uncertainty of the self.",
+                    choices: [{ text: "The End.", nextNode: "start" }]
+                }
+            };
+            
+            function showNode(nodeKey) {
+                const node = gameData[nodeKey];
+                storyTextElement.innerHTML = ''; choicesElement.innerHTML = '';
+                node.text.split('\n').forEach((p, i) => { const el = document.createElement('p'); el.textContent = p.trim(); el.style.animationDelay = `${i * 0.1}s`; storyTextElement.appendChild(el); });
+                if (node.choices) {
+                    node.choices.forEach((choice, i) => {
+                        const btn = document.createElement('button');
+                        btn.classList.add('choice-btn'); btn.textContent = choice.text;
+                        btn.onclick = () => {
+                            if (choice.action) { gameActions[choice.action](choice.params); }
+                            else if (choice.nextNode) { showNode(choice.nextNode); }
+                        };
+                        choicesElement.appendChild(btn);
+                    });
+                }
+            }
+
+            const gameActions = {
+                startLSCGame: (params) => {
+                    storyTextElement.style.display = 'none'; choicesElement.style.display = 'none';
+                    lscContainer.style.display = 'block';
+                    document.getElementById('lsc-prompt').textContent = params.prompt;
+                    
+                    const dissonanceSlider = document.getElementById('dissonance-slider');
+                    const resonanceSlider = document.getElementById('resonance-slider');
+                    const progressFill = document.getElementById('lsc-progress-fill');
+                    let progress = 0;
+                    
+                    resonanceSlider.oninput = () => { document.getElementById('resonance-value').textContent = resonanceSlider.value + '%'; };
+
+                    const dissonanceInterval = setInterval(() => {
+                        let current = parseInt(dissonanceSlider.value);
+                        let change = (50 - current) * 0.1 + (Math.random() - 0.5) * 30;
+                        dissonanceSlider.value = Math.max(0, Math.min(100, current + change));
+                        document.getElementById('dissonance-value').textContent = parseInt(dissonanceSlider.value) + '%';
+                    }, 1500);
+
+                    const gameLoop = setInterval(() => {
+                        const diff = Math.abs(dissonanceSlider.value - resonanceSlider.value);
+                        if (diff <= 15) { progress += 1.5; } else { progress -= 1; }
+                        progress = Math.max(0, progress);
+                        progressFill.style.width = `${progress}%`;
+
+                        if (progress >= 100) {
+                            lscIntervals.forEach(clearInterval);
+                            lscContainer.style.display = 'none';
+                            storyTextElement.style.display = 'block'; choicesElement.style.display = 'grid';
+                            showNode(params.nextNode);
+                        }
+                    }, 200);
+                    lscIntervals = [dissonanceInterval, gameLoop];
+                }
+            };
+            
+            showNode('start');
+        });
+    </script>
+</body>
+</html>
