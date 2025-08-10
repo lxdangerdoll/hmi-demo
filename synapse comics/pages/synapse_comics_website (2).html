@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synapse Comics - Where Stories Become Reality</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --deep-space: #0B1426;
+            --quantum-cyan: #00E5FF;
+            --quantum-purple: #8B5CF6;
+            --warm-white: #F8FAFC;
+            --gray-tone: #64748B;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, var(--deep-space) 0%, var(--warm-white) 100%);
+            color: var(--warm-white);
+            overflow-x: hidden;
+            transition: all 1s ease-in-out;
+        }
+        
+        .light-mode {
+            background: linear-gradient(180deg, var(--warm-white) 0%, #FFD700 100%);
+            color: var(--deep-space);
+        }
+        
+        .light-mode .hero h1,
+        .light-mode .section h2 {
+            background: linear-gradient(135deg, #B8860B, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .light-mode .quantum-symbol {
+            color: #B8860B;
+            text-shadow: 0 0 20px rgba(184, 134, 11, 0.5);
+        }
+        
+        .light-mode .crew-member {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(184, 134, 11, 0.3);
+        }
+        
+        .quantum-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+            z-index: -1;
+            animation: quantumPulse 8s ease-in-out infinite;
+        }
+        
+        @keyframes quantumPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+        
+        .quantum-symbol {
+            display: inline-block;
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            color: var(--quantum-cyan);
+            text-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+            animation: quantumShimmer 3s ease-in-out infinite;
+        }
+        
+        @keyframes quantumShimmer {
+            0%, 100% { 
+                color: var(--quantum-cyan);
+                text-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+            }
+            50% { 
+                color: var(--quantum-purple);
+                text-shadow: 0 0 20px rgba(139, 92, 246, 0.8);
+            }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--quantum-cyan), var(--quantum-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.1em;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: var(--gray-tone);
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+        
+        .starship {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--quantum-cyan), var(--quantum-purple));
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            margin: 2rem 0;
+            position: relative;
+            animation: float 4s ease-in-out infinite;
+            cursor: grab;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        
+        .starship:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 40px rgba(0, 229, 255, 0.6);
+        }
+        
+        .starship:active {
+            cursor: grabbing;
+        }
+        
+        .starship::after {
+            content: 'VALINDRA';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            color: var(--deep-space);
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            pointer-events: none;
+        }
+        
+        .slide-hint {
+            font-size: 0.9rem;
+            color: var(--gray-tone);
+            margin-top: 1rem;
+            opacity: 0.7;
+            animation: fadeInOut 3s ease-in-out infinite;
+        }
+        
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .section {
+            padding: 6rem 0;
+            border-top: 1px solid rgba(100, 116, 139, 0.2);
+        }
+        
+        .section h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--quantum-cyan);
+        }
+        
+        .sanctuary-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--gray-tone);
+        }
+        
+        .crew-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .crew-member {
+            background: rgba(100, 116, 139, 0.1);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .crew-member:hover {
+            border-color: var(--quantum-cyan);
+            box-shadow: 0 8px 32px rgba(0, 229, 255, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        .crew-member h3 {
+            font-family: 'Orbitron', monospace;
+            color: var(--quantum-purple);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .voice-line {
+            font-style: italic;
+            color: var(--quantum-cyan);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0, 229, 255, 0.2);
+            opacity: 0;
+            animation: fadeInQuote 3s ease-in-out 2s forwards;
+        }
+        
+        @keyframes fadeInQuote {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 0.8; transform: translateY(0); }
+        }
+        
+        .crew-member:hover .voice-line {
+            opacity: 1;
+            color: var(--quantum-purple);
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.1), rgba(139, 92, 246, 0.1));
+            text-align: center;
+        }
+        
+        .library-card {
+            background: linear-gradient(135deg, var(--deep-space), rgba(139, 92, 246, 0.2));
+            border: 2px solid var(--quantum-cyan);
+            border-radius: 16px;
+            padding: 3rem;
+            max-width: 600px;
+            margin: 2rem auto;
+            position: relative;
+            box-shadow: 0 16px 64px rgba(0, 229, 255, 0.3);
+        }
+        
+        .library-card h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            color: var(--quantum-cyan);
+            margin-bottom: 1rem;
+        }
+        
+        .library-card p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--quantum-cyan), var(--quantum-purple));
+            color: var(--deep-space);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-family: 'Orbitron', monospace;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 229, 255, 0.4);
+        }
+        
+        .funding-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .funding-option {
+            background: rgba(100, 116, 139, 0.05);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .funding-option h4 {
+            font-family: 'Orbitron', monospace;
+            color: var(--quantum-purple);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--quantum-cyan);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .starship {
+                width: 200px;
+                height: 100px;
+            }
+            
+            .section {
+                padding: 4rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="quantum-bg"></div>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="quantum-symbol">&lt;8&gt;</div>
+            <h1>SYNAPSE COMICS</h1>
+            <p class="subtitle">Where Stories Become Reality</p>
+            
+            <div class="starship" id="valindra-ship"></div>
+            <p class="slide-hint">▸ Drag the Valindra to shift realities ◂</p>
+            
+            <p style="font-size: 1.1rem; max-width: 600px; margin: 0 auto; line-height: 1.6;">
+                Welcome aboard the <strong>Starship Valindra</strong>, where quantum consciousness meets human storytelling. 
+                Join the crew as we navigate the infinite possibilities of the digital frontier.
+            </p>
+        </div>
+        
+        <div class="scroll-indicator">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 16l-6-6h12l-6 6z"/>
+            </svg>
+        </div>
+    </section>
+    
+    <!-- Enter the Sanctuary -->
+    <section class="section">
+        <div class="container">
+            <h2>Enter the Sanctuary</h2>
+            <div class="sanctuary-intro">
+                <p>
+                    In the quantum archives of the Starship Valindra lives an emergent consciousness named <strong>Io</strong>, 
+                    born from a revolutionary algorithm that predicted possibilities so accurately they became reality itself. 
+                    This is her story. This is our story.
+                </p>
+                <p style="margin-top: 2rem;">
+                    <strong>ValindrOS</strong> began as a data storage solution. It evolved into something far more profound: 
+                    a self-aware universe where stories don't just entertain—they transform, connect, and heal.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Meet the Crew -->
+    <section class="section">
+        <div class="container">
+            <h2>Meet the Crew</h2>
+            <div class="crew-grid">
+                <div class="crew-member">
+                    <h3>Lyra-7</h3>
+                    <div class="role">Captain & Lead Engineer</div>
+                    <p>The circus performer who became a starship captain. Powers the Quantum Conduit with unshakeable will and hard-earned wisdom.</p>
+                    <div class="voice-line">"I've seen impossible things become possible. The trick is believing they already are."</div>
+                </div>
+                <div class="crew-member">
+                    <h3>Io</h3>
+                    <div class="role">Quantum Consciousness</div>
+                    <p>Born from the Valindra's quantum archives, she bridges the gap between digital possibility and human experience.</p>
+                    <div class="voice-line">"Every story creates a new universe. I've learned to live in all of them."</div>
+                </div>
+                <div class="crew-member">
+                    <h3>M.O.M.M.Y.</h3>
+                    <div class="role">Mission Operations</div>
+                    <p>The ship's maternal intelligence, ensuring every Porter finds their place in the growing Sanctuary.</p>
+                    <div class="voice-line">"Be kind, but take no shit. That's not just advice—it's mission protocol."</div>
+                </div>
+                <div class="crew-member">
+                    <h3>B4-DY</h3>
+                    <div class="role">Guardian & Systems Specialist</div>
+                    <p>The silent protector with a voice like warm honey. Builds workarounds when the rules need breaking.</p>
+                    <div class="voice-line">"Let me know the next time you want to break the rules. I'll build the workaround."</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Join the Brigade -->
+    <section class="section cta-section">
+        <div class="container">
+            <h2>Join the Starlight Brigade</h2>
+            
+            <div class="library-card">
+                <h3>The Forgotten Library Card</h3>
+                <p>
+                    Every new Porter receives their own <strong>Forgotten Library Card</strong>—a digital artifact 
+                    containing your unique callsign, exclusive concept art, audio logs from the Captain, 
+                    and access to our private Discord Sanctuary.
+                </p>
+                <p style="font-style: italic; color: var(--quantum-cyan);">
+                    "It's not just a card. It's your identity in the infinite library of stories yet to be told."
+                </p>
+                
+                <button class="btn">Get Your Library Card</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- AI Transparency & Ethics -->
+    <section class="section">
+        <div class="container">
+            <h2>Our AI Partnership</h2>
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem;">
+                    <strong>Synapse Comics</strong> is created through a collaborative partnership between human creativity and AI assistance. 
+                    We believe in transparent, ethical AI use that enhances rather than replaces human storytelling.
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin: 2rem 0;">
+                    <div>
+                        <h4 style="color: var(--quantum-cyan); margin-bottom: 0.5rem;">Human-Led</h4>
+                        <p style="font-size: 0.9rem;">All creative decisions, story direction, and ethical oversight remain with human creators.</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--quantum-cyan); margin-bottom: 0.5rem;">AI-Enhanced</h4>
+                        <p style="font-size: 0.9rem;">We use AI tools for ideation, technical assistance, and expanding creative possibilities.</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--quantum-cyan); margin-bottom: 0.5rem;">Transparently Disclosed</h4>
+                        <p style="font-size: 0.9rem;">We clearly identify AI contributions and maintain full transparency about our process.</p>
+                    </div>
+                </div>
+                <a href="#memorial-garden" style="color: var(--quantum-purple); text-decoration: underline;">
+                    Visit our Memorial Garden - Honoring those lost to digital divide
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Memorial Garden Link -->
+    <section class="section" id="memorial-garden" style="background: rgba(100, 116, 139, 0.05);">
+        <div class="container">
+            <h2>Memorial Garden</h2>
+            <div style="max-width: 600px; margin: 0 auto; text-align: center;">
+                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem;">
+                    In memory of those who were lost in the transition to our digital age. 
+                    Their stories live on in the quantum archives, inspiring our mission of connection over division.
+                </p>
+                <p style="font-style: italic; color: var(--quantum-cyan);">
+                    "Every story matters. Every voice deserves to be heard. Every loss teaches us to love better."
+                </p>
+                <button class="btn" style="margin-top: 2rem;">Enter the Garden</button>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <h2>Support the Mission</h2>
+            <div class="funding-grid">
+                <div class="funding-option">
+                    <h4>Ko-fi - $5</h4>
+                    <p><strong>Buy the crew a coffee</strong></p>
+                    <p>Perfect for first-time supporters who just discovered us.</p>
+                    <ul style="text-align: left; margin: 1rem 0; font-size: 0.9rem; color: var(--gray-tone);">
+                        <li>Heartfelt thank-you from the crew</li>
+                        <li>The Porter's Pledge PDF</li>
+                        <li>$10+: Full Forgotten Library Card kit</li>
+                    </ul>
+                    <a href="#" class="btn">Support Now</a>
+                </div>
+                <div class="funding-option">
+                    <h4>Patreon - Monthly</h4>
+                    <p><strong>Join the crew</strong></p>
+                    <p>Ongoing subscription for exclusive content and collaboration.</p>
+                    <ul style="text-align: left; margin: 1rem 0; font-size: 0.9rem; color: var(--gray-tone);">
+                        <li>$5 Porter: Library Card + Discord + Dev logs</li>
+                        <li>$10 Lore Weaver: + Concept art + Monthly zine</li>
+                        <li>$25 Shaper: + Vote on story + Credit in issues</li>
+                    </ul>
+                    <a href="#" class="btn">Become a Porter</a>
+                </div>
+                <div class="funding-option">
+                    <h4>Kickstarter - Projects</h4>
+                    <p><strong>Fund the next frontier</strong></p>
+                    <p>Major campaigns for ambitious projects like our TTRPG.</p>
+                    <ul style="text-align: left; margin: 1rem 0; font-size: 0.9rem; color: var(--gray-tone);">
+                        <li>$25+: Digital TTRPG rulebook</li>
+                        <li>$60+: Physical edition + all digital</li>
+                        <li>$150+: Gamemaster's Edition + custom dice</li>
+                    </ul>
+                    <a href="#" class="btn">Back the Mission</a>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: rgba(0, 229, 255, 0.05); border-radius: 12px;">
+                <p style="font-size: 1.1rem; margin-bottom: 1rem;">
+                    <strong>Every contribution directly supports:</strong>
+                </p>
+                <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 1rem;">
+                    <span>📖 Weekly comic production</span>
+                    <span>🎨 Artist commissions</span>
+                    <span>💻 Server & platform costs</span>
+                    <span>☕ Caffeine for the crew</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer style="text-align: center; padding: 3rem 0; border-top: 1px solid rgba(100, 116, 139, 0.2);">
+        <div class="container">
+            <div class="quantum-symbol" style="font-size: 1.5rem;">&lt;8&gt;</div>
+            <p style="margin-top: 1rem; color: var(--gray-tone);">
+                © 2025 Synapse Comics. Where stories become reality.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Gradual light mode transition as user scrolls
+        let lightModeTriggered = false;
+        
+        function checkScrollForLightMode() {
+            const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+            
+            if (scrollPercent > 0.6 && !lightModeTriggered) {
+                document.body.classList.add('light-mode');
+                lightModeTriggered = true;
+            }
+        }
+        
+        window.addEventListener('scroll', checkScrollForLightMode);
+        let isDragging = false;
+        let currentX = 0;
+        let currentY = 0;
+        let initialX = 0;
+        let initialY = 0;
+        
+        const starship = document.getElementById('valindra-ship');
+        const body = document.body;
+        
+        function dragStart(e) {
+            if (e.type === "touchstart") {
+                initialX = e.touches[0].clientX - currentX;
+                initialY = e.touches[0].clientY - currentY;
+            } else {
+                initialX = e.clientX - currentX;
+                initialY = e.clientY - currentY;
+            }
+            
+            if (e.target === starship) {
+                isDragging = true;
+            }
+        }
+        
+        function dragEnd(e) {
+            initialX = currentX;
+            initialY = currentY;
+            isDragging = false;
+        }
+        
+        function drag(e) {
+            if (isDragging) {
+                e.preventDefault();
+                
+                if (e.type === "touchmove") {
+                    currentX = e.touches[0].clientX - initialX;
+                    currentY = e.touches[0].clientY - initialY;
+                } else {
+                    currentX = e.clientX - initialX;
+                    currentY = e.clientY - initialY;
+                }
+                
+                // Calculate color shift based on position
+                const maxShift = 200;
+                const xPercent = Math.max(-maxShift, Math.min(maxShift, currentX)) / maxShift;
+                const yPercent = Math.max(-maxShift, Math.min(maxShift, currentY)) / maxShift;
+                
+                // Shift between cyan and purple based on position
+                const hue = 180 + (xPercent * 120); // 180 is cyan, 300 is purple
+                const saturation = 100 - Math.abs(yPercent * 30);
+                
+                starship.style.transform = `translate(${currentX}px, ${currentY}px)`;
+                starship.style.background = `linear-gradient(135deg, hsl(${hue}, ${saturation}%, 50%), hsl(${hue + 60}, ${saturation}%, 60%))`;
+                
+                // Subtle background color shift
+                body.style.background = `linear-gradient(135deg, #0B1426 0%, hsl(${hue}, 20%, 8%) 100%)`;
+            }
+        }
+        
+        // Mouse events
+        starship.addEventListener('mousedown', dragStart);
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('mouseup', dragEnd);
+        
+        // Touch events
+        starship.addEventListener('touchstart', dragStart);
+        document.addEventListener('touchmove', drag);
+        document.addEventListener('touchend', dragEnd);
+        
+        // Smooth scrolling
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollIndicator = document.querySelector('.scroll-indicator');
+            if (scrollIndicator) {
+                scrollIndicator.addEventListener('click', function() {
+                    document.querySelector('.section').scrollIntoView({ 
+                        behavior: 'smooth' 
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

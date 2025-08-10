@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lyra-7 Rebel Library Card</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --deep-space: #0B1426;
+            --quantum-cyan: #00E5FF;
+            --quantum-purple: #8B5CF6;
+            --rebel-red: #FF4444;
+            --worn-gold: #B8860B;
+            --paper-white: #F5F5DC;
+            --shadow-dark: rgba(0, 0, 0, 0.8);
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            font-family: 'Courier Prime', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .card-container {
+            perspective: 1000px;
+            position: relative;
+        }
+        
+        .library-card {
+            width: 400px;
+            height: 250px;
+            background: linear-gradient(135deg, 
+                rgba(245, 245, 220, 0.95) 0%, 
+                rgba(245, 245, 220, 0.85) 50%,
+                rgba(240, 240, 220, 0.9) 100%);
+            border-radius: 8px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            
+            /* Holographic shimmer overlay */
+            background-image: 
+                linear-gradient(45deg, transparent 30%, rgba(0, 229, 255, 0.1) 50%, transparent 70%),
+                linear-gradient(-45deg, transparent 30%, rgba(139, 92, 246, 0.1) 50%, transparent 70%);
+            animation: holoShimmer 4s ease-in-out infinite;
+        }
+        
+        .library-card:hover {
+            transform: rotateX(10deg) rotateY(10deg) translateY(-5px);
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.6),
+                0 0 20px rgba(0, 229, 255, 0.3);
+        }
+        
+        @keyframes holoShimmer {
+            0%, 100% { 
+                background-position: -200% 0%, 200% 0%;
+                opacity: 0.95;
+            }
+            50% { 
+                background-position: 200% 0%, -200% 0%;
+                opacity: 0.85;
+            }
+        }
+        
+        /* Weathered texture overlay */
+        .library-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.05) 1px, transparent 1px),
+                linear-gradient(45deg, transparent 49%, rgba(0, 0, 0, 0.03) 50%, transparent 51%);
+            border-radius: 8px;
+            pointer-events: none;
+        }
+        
+        /* Scuff marks and wear */
+        .library-card::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            width: 30px;
+            height: 2px;
+            background: rgba(0, 0, 0, 0.2);
+            transform: rotate(25deg);
+            border-radius: 1px;
+            box-shadow: 
+                -10px 20px 0 -1px rgba(0, 0, 0, 0.1),
+                15px 35px 0 -1px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 15px 20px 0;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .quantum-sigil {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--quantum-cyan), var(--quantum-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: signalFlicker 2s ease-in-out infinite;
+            position: relative;
+        }
+        
+        @keyframes signalFlicker {
+            0%, 90%, 100% { opacity: 1; }
+            95% { opacity: 0.3; }
+        }
+        
+        .card-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--deep-space);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+        
+        .main-content {
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .portrait-section {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            gap: 15px;
+        }
+        
+        .portrait {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, 
+                var(--quantum-cyan) 0%, 
+                var(--quantum-purple) 50%,
+                var(--rebel-red) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            font-weight: bold;
+            position: relative;
+            box-shadow: 
+                0 8px 16px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        
+        .portrait::before {
+            content: '🎪';
+            font-size: 2.5rem;
+            animation: portraitGlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes portraitGlow {
+            0%, 100% { 
+                transform: scale(1);
+                filter: brightness(1);
+            }
+            50% { 
+                transform: scale(1.1);
+                filter: brightness(1.2);
+            }
+        }
+        
+        .character-info {
+            flex: 1;
+        }
+        
+        .character-name {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--deep-space);
+            margin-bottom: 5px;
+            position: relative;
+        }
+        
+        .character-title {
+            font-size: 0.9rem;
+            color: var(--worn-gold);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .glitch-callsign {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--rebel-red);
+            text-align: center;
+            letter-spacing: 0.2em;
+            animation: glitchText 4s ease-in-out infinite;
+            position: relative;
+            z-index: 10;
+        }
+        
+        @keyframes glitchText {
+            0%, 90%, 100% { 
+                transform: translateX(0);
+                opacity: 1;
+            }
+            92% { 
+                transform: translateX(-2px);
+                opacity: 0.8;
+            }
+            94% { 
+                transform: translateX(2px);
+                opacity: 0.6;
+            }
+            96% { 
+                transform: translateX(-1px);
+                opacity: 0.9;
+            }
+        }
+        
+        .access-level {
+            position: absolute;
+            top: 15px;
+            right: 60px;
+            font-family: 'Courier Prime', monospace;
+            font-size: 0.6rem;
+            color: var(--rebel-red);
+            background: rgba(255, 68, 68, 0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .rebel-stamp {
+            position: absolute;
+            bottom: 60px;
+            right: 20px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.7rem;
+            color: var(--rebel-red);
+            opacity: 0.6;
+            transform: rotate(-15deg);
+            border: 2px solid var(--rebel-red);
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        .data-strip {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(0, 0, 0, 0.1) 20%, 
+                rgba(0, 0, 0, 0.05) 80%, 
+                transparent 100%);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            font-size: 0.6rem;
+            color: rgba(0, 0, 0, 0.5);
+            font-family: 'Courier Prime', monospace;
+        }
+        
+        @media (max-width: 768px) {
+            .library-card {
+                width: 350px;
+                height: 220px;
+            }
+            
+            .character-name {
+                font-size: 1.4rem;
+            }
+            
+            .portrait {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="library-card">
+            <div class="card-header">
+                <div class="card-title">Forgotten Library</div>
+                <div class="quantum-sigil">&lt;8&gt;</div>
+            </div>
+            
+            <div class="access-level">REBEL ACCESS</div>
+            
+            <div class="main-content">
+                <div class="portrait-section">
+                    <div class="portrait"></div>
+                    <div class="character-info">
+                        <div class="character-name">LYRA-7</div>
+                        <div class="character-title">Captain • Lead Engineer</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="rebel-stamp">CONTRABAND</div>
+            
+            <div class="glitch-callsign">MERCY DANGER</div>
+            
+            <div class="data-strip">
+                VALINDRA-ARCHIVED • QUANTUM ENCRYPTED • PASS DISCREETLY
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add subtle 3D interaction
+        const card = document.querySelector('.library-card');
+        const container = document.querySelector('.card-container');
+        
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+            
+            card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+        });
+        
+        container.addEventListener('mouseleave', () => {
+            card.style.transform = 'rotateX(0deg) rotateY(0deg) translateY(0px)';
+        });
+        
+        // Add click interaction
+        card.addEventListener('click', () => {
+            card.style.transform = 'rotateY(180deg)';
+            setTimeout(() => {
+                card.style.transform = 'rotateY(0deg)';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+:root { --violet:#6b2bd9; --ink:#0b0b0f; --paper:#0e0e14 }
+html,body { margin:0; height:100%; background:var(--paper); color:#e8e8f2; font-family:system-ui,Segoe UI,Inter,Arial }
+.hud { position:fixed; top:.75rem; left:.75rem; display:flex; gap:.5rem; align-items:center; z-index:10; opacity:.9 }
+.hud img { height:28px }
+.page { position:fixed; inset:0; display:grid; place-items:center; opacity:0; transform:translateX(10%); transition:opacity .35s ease, transform .35s ease }
+.page.active { opacity:1; transform:translateX(0) }
+.frame { max-width:720px; padding:24px; line-height:1.45;
+  background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0));
+  border:1px solid rgba(255,255,255,.08); border-radius:18px;
+  box-shadow:0 10px 40px rgba(0,0,0,.5) }
+.title { font-size:clamp(22px,4vw,36px); letter-spacing:.3px; margin:0 0 .25rem }
+.deck { opacity:.8; margin:0 0 1rem }
+.cta { display:inline-flex; gap:.5rem; align-items:center; background:var(--violet); color:#fff; border:none; border-radius:12px; padding:10px 14px; margin-top:12px; text-decoration:none }
+.glitch { position:fixed; inset:0; pointer-events:none; mix-blend-mode:screen; opacity:0; transition:opacity .2s }
+.glitch.show { opacity:.2; animation:scan .5s ease }
+@keyframes scan { 0% { transform:translateY(-20px) } 100% { transform:translateY(0) } }
+.nav { position:fixed; bottom:.75rem; right:.75rem; display:flex; gap:.5rem }
+.nav button { background:#1b1b26; color:#cfd3ff; border:1px solid #2e2e44; border-radius:12px; padding:10px 14px }
+
+/* moved from inline attributes */
+.full-img { width:100%; border-radius:12px; display:block }
+.embed { width:100%; height:360px; border:0; border-radius:12px; background:#000 }

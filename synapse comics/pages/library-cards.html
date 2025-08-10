@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Forgotten Library Cards • Synapse Comics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/assets/css/themes.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <main style="max-width:1100px; margin:0 auto; padding:3rem 1rem;">
+    <h1 style="font-family:Orbitron" class="text-metallic">Forgotten Library Cards</h1>
+    <p style="color:var(--gray-500); margin:.5rem 0 2rem;">
+      Choose your artifact. The <span class="badge-foil">Starlight Edition</span> unlocks at <strong>$10+</strong>.
+    </p>
+
+    <section style="display:grid; gap:1.25rem; grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">
+      <!-- Lyra-7 Variant -->
+      <article class="card">
+        <h3 style="font-family:Orbitron">Lyra-7 • Rebel Edition</h3>
+        <div style="height:160px; border-radius:8px; margin:.75rem 0;
+            background:linear-gradient(135deg, rgba(245,245,220,.96), rgba(245,245,220,.85)),
+                       linear-gradient(45deg, rgba(0,229,255,.12), transparent 60%),
+                       linear-gradient(-45deg, rgba(139,92,246,.12), transparent 60%);">
+        </div>
+        <p style="color:var(--gray-500)">Scuffed holographic finish, glitched callsign, contraband stamp.</p>
+        <button class="btn btn-primary">Add to Kit</button>
+      </article>
+
+      <!-- Base Porter Card -->
+      <article class="card">
+        <h3 style="font-family:Orbitron">Porter • Base Card</h3>
+        <div style="height:160px; border-radius:8px; margin:.75rem 0;
+            background:linear-gradient(135deg, rgba(245,245,220,.95), rgba(240,240,220,.9));">
+        </div>
+        <p style="color:var(--gray-500)">Clean identity card with your callsign and ID.</p>
+        <button class="btn btn-primary">Add to Kit</button>
+      </article>
+
+      <!-- Starlight Edition (GATED) -->
+      <article class="card locked" id="starlight-card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <h3 style="font-family:Orbitron">Starlight Edition <span class="badge-foil">FOIL</span></h3>
+        </div>
+        <div style="height:160px; border-radius:8px; margin:.75rem 0;
+            background:
+              linear-gradient(135deg, rgba(245,245,220,.85), rgba(240,240,220,.85)),
+              conic-gradient(from 0deg, rgba(0,229,255,.18), rgba(139,92,246,.18), rgba(0,229,255,.18));
+            filter: saturate(1.2) contrast(1.05);">
+        </div>
+        <p style="color:var(--gray-500)">Premium holographic foil. Requires $10+ to unlock.</p>
+        <button class="btn btn-primary" id="unlock-btn">How to Unlock</button>
+      </article>
+    </section>
+
+    <div id="unlock-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.6);">
+      <div class="card" style="max-width:560px; margin:10vh auto; background:#0E1731; border-color:rgba(139,92,246,.4);">
+        <h3 style="font-family:Orbitron" class="text-quantum">Unlock Starlight Edition</h3>
+        <p style="color:var(--gray-500); margin:.6rem 0 1rem;">
+          This variant unlocks for supporters at <strong>$10+</strong> (Patreon, Ko-fi, Kickstarter).
+        </p>
+        <ol style="line-height:1.65; color:var(--warm-white); opacity:.9;">
+          <li>Support at $10+ on your preferred platform.</li>
+          <li>Return here and click <em>Verify</em> to sync your entitlement.</li>
+        </ol>
+        <div style="margin-top:1rem; display:flex; gap:.5rem; flex-wrap:wrap;">
+          <a class="btn btn-primary" href="/support">Go to Support</a>
+          <button class="btn" id="verify-btn">Verify</button>
+          <button class="btn" id="close-modal">Close</button>
+        </div>
+        <p style="margin-top:.8rem; color:var(--gray-500); font-size:.9rem;">
+          Dev note: hook <code>verify()</code> to your backend/profile token to lift the front-end gate.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Simple modal + stub verification
+    const modal = document.getElementById('unlock-modal');
+    document.getElementById('unlock-btn').onclick = () => modal.style.display = 'block';
+    document.getElementById('close-modal').onclick = () => modal.style.display = 'none';
+    document.getElementById('verify-btn').onclick = () => {
+      // TODO: replace with real entitlement check.
+      // If verified, remove .locked class:
+      document.getElementById('starlight-card').classList.remove('locked');
+      modal.style.display = 'none';
+      alert('Verified! Starlight Edition unlocked (demo).');
+    };
+  </script>
+</body>
+</html>

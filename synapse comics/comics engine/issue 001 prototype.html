@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Synapse Comics — Issue #01</title>
+
+  <!-- Content Security Policy: no inline, only same-origin files -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self' data:; frame-src 'self'; connect-src 'self'">
+
+  <link rel="preload" href="./assets/synapse-masthead.svg" as="image">
+  <link rel="stylesheet" href="./assets/style.css">
+</head>
+<body>
+  <div class="hud">
+    <img src="./assets/synapse-masthead.svg" alt="Synapse"/><span>ISSUE #01</span>
+  </div>
+
+  <div class="page active" data-i="0">
+    <div class="frame">
+      <h1 class="title">Captain Odelis: Signal from the Storm</h1>
+      <p class="deck">Issue #01 • Special Report • “The Stranding”</p>
+      <img class="full-img" src="./assets/cover-issue-01.jpg" alt="Cover"/>
+      <a class="cta" href="#p1">Begin</a>
+    </div>
+  </div>
+
+  <div class="page" data-i="1" id="p1">
+    <div class="frame">
+      <h2 class="title">WHO IS LYRA-7? — An Exposé on the Velvet Loop</h2>
+      <p class="deck">By Io, Lorekeeper • Loop #42</p>
+      <p>They call her a ghost. A glitch. A memory with a body... (your copy here)</p>
+    </div>
+  </div>
+
+  <div class="page" data-i="2">
+    <div class="frame">
+      <h2 class="title">Captain’s Log: “Signal from the Storm”</h2>
+      <p>They tell you scarcity is the natural state of things… (your log here)</p>
+    </div>
+  </div>
+
+  <div class="page" data-i="3">
+    <div class="frame">
+      <h2 class="title">The Spark of Rebellion — TTRPG</h2>
+      <ul>
+        <li>Create your Porter</li><li>Wield the Valindra CLI</li><li>Shape the Canon</li>
+      </ul>
+      <h3>The Synapse Scouts</h3>
+      <p>Maya • Kenji (+ Anansi) • Lex — first look art slots here.</p>
+    </div>
+  </div>
+
+  <div class="page" data-i="4">
+    <div class="frame">
+      <h2 class="title">Playable Prototype — Starship Valindra Idle</h2>
+      <p>Omelas Test Intro</p>
+      <iframe class="embed" src="./demo/idle/index.html" title="SV Idle"></iframe>
+      <p>Repo: <a href="https://github.com/lxdangerdoll/SVI-Loop-Two">SVI-Loop-Two</a></p>
+      <p><em>Coming soon:</em> Valindra CLI standalone</p>
+    </div>
+  </div>
+
+  <div class="page" data-i="5">
+    <div class="frame">
+      <h2 class="title">Join the Signal. Become a Porter.</h2>
+      <p>Help us keep the forge lit and the archive independent.</p>
+      <p>
+        <a class="cta" href="https://patreon.example">Patreon</a>
+        <a class="cta" href="https://ko-fi.example">Ko-fi</a>
+        <a class="cta" href="https://kickstarter.example">Kickstarter</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="glitch" id="glitch"></div>
+  <div class="nav"><button id="prev">◀</button><button id="next">▶</button></div>
+
+  <noscript>This experience needs JavaScript enabled.</noscript>
+  <script src="./assets/app.js" defer></script>
+</body>
+</html>
